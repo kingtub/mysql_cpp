@@ -1,0 +1,17 @@
+1. When inserting or updating BLOB or TEXT columns, Connector/C++ developers are advised not to use setString(). Instead, use the dedicated setBlob() API function.
+   The use of setString() can cause a Packet too large error message. The error occurs if the length of the string passed to the connector using setString() exceeds
+   max_allowed_packet(minus a few bytes reserved in the protocol for control purposes). This situation is not handled in
+   Connector/C++, because it could lead to security issues, such as extremely large memory allocation
+   requests due to malevolently long strings.
+   If setBlob() is used, this problem does not arise because setBlob() takes a streaming approach based on std::istream. When sending the data from the stream to the MySQL
+   server, Connector/C++ splits the stream into chunks appropriate for the server using the current max_allowed_packet setting.
+   
+   Caution
+	When using setString(), it is not possible to set max_allowed_packet
+	to a value large enough for the string prior to passing it to Connector/C++.
+	That configuration option cannot be changed within a session.
+	
+
+2. g++ -o mysql_cpp_api mysql_cppapi.cpp -lmysqlcppconn 
+
+3. sudo apt install libmysqlcppconn-dev

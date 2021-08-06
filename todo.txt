@@ -1,3 +1,0 @@
-1. use PreparedStatement
-2. Scan all the Code in examples directory?
-3. Practice all the sql code writen in YouDao Note.
